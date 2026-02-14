@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Twitter, Mail } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Mail, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useRouter } from '@/lib/router';
@@ -20,6 +20,7 @@ export function Footer() {
                 variant="ghost"
                 size="icon"
                 className="text-white hover:text-red-600 hover:bg-white/10"
+                onClick={() => window.open('https://www.facebook.com/share/17yh8eW4im/', '_blank')}
               >
                 <Facebook className="h-5 w-5" />
               </Button>
@@ -27,6 +28,7 @@ export function Footer() {
                 variant="ghost"
                 size="icon"
                 className="text-white hover:text-red-600 hover:bg-white/10"
+                onClick={() => window.open('https://www.instagram.com/lynora12335', '_blank')}
               >
                 <Instagram className="h-5 w-5" />
               </Button>
@@ -34,8 +36,9 @@ export function Footer() {
                 variant="ghost"
                 size="icon"
                 className="text-white hover:text-red-600 hover:bg-white/10"
+                onClick={() => window.open('https://www.tiktok.com/@lynora_t_shirt?_r=1&_t=ZS-93mAWzQhPfR', '_blank')}
               >
-                <Twitter className="h-5 w-5" />
+                <MessageCircle className="h-5 w-5" />
               </Button>
             </div>
           </div>

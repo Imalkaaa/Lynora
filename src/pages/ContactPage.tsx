@@ -56,8 +56,8 @@ export function ContactPage() {
               <p className="text-gray-600 text-sm mb-2">
                 Send us an email anytime!
               </p>
-              <a href="mailto:info@lynora.com" className="text-red-600 hover:text-red-700 font-medium">
-                info@lynora.com
+              <a href="mailto:Tharidulak13@gmil.com" className="text-red-600 hover:text-red-700 font-medium">
+                Tharidulak13@gmil.com
               </a>
             </CardContent>
           </Card>
@@ -71,8 +71,8 @@ export function ContactPage() {
               <p className="text-gray-600 text-sm mb-2">
                 Mon-Fri from 9am to 6pm
               </p>
-              <a href="tel:+1234567890" className="text-red-600 hover:text-red-700 font-medium">
-                +1 (234) 567-890
+              <a href="tel:+94701447599" className="text-red-600 hover:text-red-700 font-medium">
+                +94 70 144 7599
               </a>
             </CardContent>
           </Card>

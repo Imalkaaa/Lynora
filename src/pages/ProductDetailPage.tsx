@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from '@/lib/router';
-import { supabase, ProductWithImages } from '@/lib/supabase';
+import { ProductWithImages } from '@/lib/supabase';
 import { useCart } from '@/lib/cart-context';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -28,28 +28,158 @@ export function ProductDetailPage() {
   const loadProduct = async (slug: string) => {
     setLoading(true);
 
-    const { data: productData } = await supabase
-      .from('products')
-      .select('*, product_images(*), categories(*)')
-      .eq('slug', slug)
-      .single();
+    // Static products data (same as HomePage)
+    const staticProducts: ProductWithImages[] = [
+      {
+        id: '1',
+        name: 'Elegant Floral Dress',
+        slug: 'elegant-floral-dress',
+        description: 'Beautiful floral pattern dress perfect for any occasion',
+        price: 1500,
+        category_id: '1',
+        featured: true,
+        new_arrival: false,
+        best_seller: true,
+        stock: 10,
+        sizes: ['S', 'M', 'L', 'XL'],
+        colors: ['Red', 'Blue', 'Green'],
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        product_images: [
+          {
+            id: '1-1',
+            product_id: '1',
+            image_url: '/Lynora/images/1.jpg',
+            alt_text: 'Elegant Floral Dress',
+            display_order: 1,
+            created_at: new Date().toISOString()
+          }
+        ],
+        categories: null
+      },
+      {
+        id: '2',
+        name: 'Classic Black Dress',
+        slug: 'classic-black-dress',
+        description: 'Timeless black dress for elegant evenings',
+        price: 1500,
+        category_id: '1',
+        featured: true,
+        new_arrival: false,
+        best_seller: false,
+        stock: 15,
+        sizes: ['S', 'M', 'L'],
+        colors: ['Black'],
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        product_images: [
+          {
+            id: '2-1',
+            product_id: '2',
+            image_url: '/Lynora/images/2.jpg',
+            alt_text: 'Classic Black Dress',
+            display_order: 1,
+            created_at: new Date().toISOString()
+          }
+        ],
+        categories: null
+      },
+      {
+        id: '3',
+        name: 'Summer Breeze Dress',
+        slug: 'summer-breeze-dress',
+        description: 'Light and comfortable dress for summer days',
+        price: 1500,
+        category_id: '1',
+        featured: true,
+        new_arrival: false,
+        best_seller: false,
+        stock: 20,
+        sizes: ['S', 'M', 'L', 'XL'],
+        colors: ['Yellow', 'Pink', 'Blue'],
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        product_images: [
+          {
+            id: '3-1',
+            product_id: '3',
+            image_url: '/Lynora/images/3.jpg',
+            alt_text: 'Summer Breeze Dress',
+            display_order: 1,
+            created_at: new Date().toISOString()
+          }
+        ],
+        categories: null
+      },
+      {
+        id: '4',
+        name: 'Modern Style Dress',
+        slug: 'modern-style-dress',
+        description: 'Contemporary design with a perfect fit',
+        price: 1500,
+        category_id: '1',
+        featured: true,
+        new_arrival: false,
+        best_seller: true,
+        stock: 8,
+        sizes: ['M', 'L', 'XL'],
+        colors: ['Navy', 'Gray'],
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        product_images: [
+          {
+            id: '4-1',
+            product_id: '4',
+            image_url: '/Lynora/images/4.jpg',
+            alt_text: 'Modern Style Dress',
+            display_order: 1,
+            created_at: new Date().toISOString()
+          }
+        ],
+        categories: null
+      },
+      {
+        id: '5',
+        name: 'Trendy New Arrival',
+        slug: 'trendy-new-arrival',
+        description: 'Latest fashion trend just arrived',
+        price: 1500,
+        category_id: '1',
+        featured: false,
+        new_arrival: true,
+        best_seller: false,
+        stock: 12,
+        sizes: ['S', 'M', 'L', 'XL'],
+        colors: ['Multi-color'],
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        product_images: [
+          {
+            id: '5-1',
+            product_id: '5',
+            image_url: '/Lynora/images/5.jpg',
+            alt_text: 'Trendy New Arrival',
+            display_order: 1,
+            created_at: new Date().toISOString()
+          }
+        ],
+        categories: null
+      }
+    ];
+
+    const productData = staticProducts.find(p => p.slug === slug);
 
     if (productData) {
-      const product = productData as ProductWithImages;
-      setProduct(product);
-      setSelectedSize(product.sizes[0] || '');
-      setSelectedColor(product.colors[0] || '');
+      setProduct(productData);
+      setSelectedSize(productData.sizes[0] || '');
+      setSelectedColor(productData.colors[0] || '');
 
-      if (product.category_id) {
-        const { data: related } = await supabase
-          .from('products')
-          .select('*, product_images(*), categories(*)')
-          .eq('category_id', product.category_id)
-          .neq('id', product.id)
-          .limit(4);
-
-        if (related) setRelatedProducts(related as ProductWithImages[]);
-      }
+      // Get related products (same category, excluding current product)
+      const related = staticProducts.filter(p => 
+        p.category_id === productData.category_id && p.id !== productData.id
+      ).slice(0, 4);
+      
+      setRelatedProducts(related);
     }
 
     setLoading(false);

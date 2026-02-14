@@ -72,7 +72,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
 
       <CardFooter className="px-4 pb-4 pt-0 flex items-center justify-between">
         <span className="text-lg font-bold text-black">
-          ${product.price.toFixed(2)}
+          Rs {product.price.toFixed(2)}
         </span>
         {product.stock < 10 && product.stock > 0 && (
           <span className="text-xs text-red-600 font-medium">
